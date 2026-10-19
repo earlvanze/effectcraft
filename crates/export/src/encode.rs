@@ -1,5 +1,5 @@
 //! Movie export: FilmCraft H.264, HEVC (`effectcraft-hevcenc`) and AV1 (`effectcraft-av1enc`)
-//! → MP4 (+ AAC) and ProRes → MOV (+ PCM), muxed by
+//! → MP4 (+ AAC), ProRes and uncompressed `raw ` → MOV (+ PCM), muxed by
 //! FilmCraft's ISO BMFF / QuickTime writer.
 
 use std::io::Write;
@@ -253,7 +253,7 @@ pub(crate) async fn movie(job: &Cx<'_>, comp: &Comp, w: u32, h: u32, st: &mut St
     let rate = job.settings.rate(comp);
     let fmt = job.output.format;
     let channels = match job.output.channels {
-        Channels::Rgba if fmt != OutputFormat::ProRes => Channels::Rgb,
+        Channels::Rgba if !matches!(fmt, OutputFormat::ProRes | OutputFormat::Uncompressed) => Channels::Rgb,
         c => c,
     };
     let hardware_requested = job.settings.hardware_encoding != HardwareEncoding::Off && matches!(fmt, OutputFormat::H264 | OutputFormat::Hevc);
@@ -311,10 +311,11 @@ pub(crate) async fn movie(job: &Cx<'_>, comp: &Comp, w: u32, h: u32, st: &mut St
             OutputFormat::H264 => Box::new(H264::new(w, h, rate, job.output.bitrate_kbps)?),
             OutputFormat::Hevc => Box::new(crate::hevc_av1::Hevc::new(w, h, rate, job.output)?),
             OutputFormat::Av1 => Box::new(crate::hevc_av1::Av1::new(w, h, rate, job.output)?),
+            OutputFormat::Uncompressed => Box::new(crate::uncompressed::Raw::new(w, h, channels == Channels::Rgba)?),
             _ => Box::new(ProRes::new(w, h, job.output.prores_profile, if channels == Channels::Alpha { Channels::Rgb } else { channels })),
         },
     };
-    let brand = if fmt == OutputFormat::ProRes { Brand::Mov } else { Brand::Mp4 };
+    let brand = if matches!(fmt, OutputFormat::ProRes | OutputFormat::Uncompressed) { Brand::Mov } else { Brand::Mp4 };
     // Hardware encoders can consume a small batch while the next one renders. Keep the
     // prefetched 4K RGBA buffers bounded (four frames are about 127 MiB).
     let batch = if hardware_name.is_some() && !job.deferred() { batch_size().min(4) } else { batch_size() };
