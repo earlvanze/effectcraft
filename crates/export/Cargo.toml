@@ -33,7 +33,7 @@ log = { workspace = true }
 
 # FilmCraft's audited OS media FFI stays outside the EffectCraft workspace, which forbids unsafe.
 [target.'cfg(any(target_os = "macos", target_os = "linux"))'.dependencies]
-filmcraft-platform = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
+filmcraft-platform = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
 
 [dev-dependencies]
 effectcraft-media = { workspace = true }

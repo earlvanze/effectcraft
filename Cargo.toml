@@ -71,27 +71,27 @@ image = { version = "0.25", default-features = false, features = ["png", "jpeg"]
 
 # media codecs + containers: FilmCraft's pure-Rust crates, pinned to a revision (plan/adr/0001).
 # Only `crates/media`, `crates/export` and `crates/interchange` may depend on these.
-filmcraft-codecs = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-media = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-frame = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-color = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-time = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-export = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
+filmcraft-codecs = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-media = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-frame = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-color = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-time = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-export = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
 # encoders + muxer (crates/export)
-filmcraft-h264enc = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-prores = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-aac = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-isobmff = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
+filmcraft-h264enc = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-prores = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-aac = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-isobmff = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
 # decoder used as the round-trip oracle of effectcraft-opusenc (crates/export dev-dependency)
-filmcraft-opus = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-vp9 = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
+filmcraft-opus = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-vp9 = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
 # decoders used as the round-trip oracles of effectcraft-hevcenc / effectcraft-av1enc (dev-dependencies only)
-filmcraft-hevc = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-av1 = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
+filmcraft-hevc = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-av1 = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
 # timeline interchange (EDL, FCP7 XML, FCPXML, OTIO) for Premiere Pro interop (crates/interchange only)
-filmcraft-interchange = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-project = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
-filmcraft-geom = { git = "https://github.com/earlvanze/filmcraft", rev = "0de2aa2cf94ae9601f88fd70192fdc8d11b9248b" }
+filmcraft-interchange = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-project = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
+filmcraft-geom = { git = "https://github.com/earlvanze/filmcraft", rev = "4284f6e49c5f6f9df3a691d8cb15b94003b2862e" }
 
 # gpu (the same wgpu eframe / egui-wgpu use)
 wgpu = { version = "30.0.1", features = ["fragile-send-sync-non-atomic-wasm"] }
