@@ -256,6 +256,15 @@ impl MediaPool {
 
     /// A pool whose frame cache holds at most `bytes` of decoded frames.
     pub fn with_budget(bytes: usize) -> Self {
+        // Register FilmCraft's OS decoder factories before opening a video source. The
+        // factories decline unsupported streams and keep FilmCraft's software fallback.
+        #[cfg(any(target_os = "macos", target_os = "linux"))]
+        {
+            static REGISTER_DECODERS: std::sync::Once = std::sync::Once::new();
+            REGISTER_DECODERS.call_once(|| {
+                let _ = filmcraft_platform::register();
+            });
+        }
         Self {
             inner: Arc::new(Inner {
                 sources: Mutex::default(),
@@ -494,7 +503,7 @@ impl MediaPool {
         let path: Arc<str> = footage.path.as_str().into();
         let src = self.inner.source(&path).ok_or("the file can't be opened")?;
         let s0 = start.to_units_floor(rate as i64);
-        let native = src.info().audio.as_ref().map_or(rate, |a| a.sample_rate);
+        let native = src.info().audio().map_or(rate, |a| a.sample_rate);
         if native == 0 || rate == 0 || native == rate {
             return read_stereo(&src, s0, frames, rate);
         }
@@ -648,9 +657,11 @@ impl Inner {
                 let rate = footage.frame_rate;
                 let n = Self::frame_count(rate, footage.duration);
                 let i = Self::frame_index(rate, t, n, footage.loop_count);
-                // Middle of the frame in the file's own timing (robust to timestamp rounding).
+                // Ask inside the frame, before its midpoint. FilmCraft rounds the request to
+                // the container timebase; an exact midpoint rounds into the next frame when
+                // one video frame equals one timebase unit (for example 10 fps over 10 Hz).
                 let native = footage.native_rate.unwrap_or(rate);
-                let mt = native.tick_of(i) + Tick(native.frame_duration().0 / 2);
+                let mt = native.tick_of(i) + Tick(native.frame_duration().0 / 4);
                 Loc { key: key(&footage.path, i), media_t: Some(mt) }
             }
         }
